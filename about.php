@@ -35,6 +35,15 @@ http://www.templatemo.com/preview/templatemo_361_design_work
 </script>
 
 </head>
+
+<?php
+
+
+require_once("phpfncs/Database.php"); 
+$db =new DBOperations();
+
+?>
+
 <body>
 
 <div id="templatemo_body_wrapper">
@@ -79,38 +88,10 @@ we will take care of the rest</div>
         </div> <!-- end of main -->
         
         <div id="latest_works">
-        	<h2>Previous lands for sell</h2>
+        	<h2></h2>
             <div id="SlideItMoo_outer">	
                 <div id="SlideItMoo_inner">			
-                    <div id="SlideItMoo_items">
-                        <div class="SlideItMoo_element">
-                        	<span></span>
-                            <a href="#"><img src="images/gallery/011.png" alt="product 1" /></a>
-                        </div>	
-                        <div class="SlideItMoo_element">
-                        	<span></span>
-                            <a href="#"><img src="images/gallery/041.png" alt="product 2" /></a>
-                        </div>
-                        <div class="SlideItMoo_element">
-                        	<span></span>
-                            <a href="#"><img src="images/gallery/031.png" alt="product 3" /></a>
-                        </div>
-                        <div class="SlideItMoo_element">
-                        	<span></span>
-                            <a href="#"><img src="images/gallery/02.jpg" alt="product 4" /></a>
-                        </div>
-                        <div class="SlideItMoo_element">
-                        	<span></span>
-                            <a href="#"><img src="images/gallery/05.jpg" alt="product 5" /></a>
-                        </div>
-                        <div class="SlideItMoo_element">
-                        	<span></span>
-                            <a href="#"><img src="images/gallery/06.jpg" alt="product 6" /></a>
-                        </div>
-                    </div>			
-                </div>
-			</div> 
-            <a href="#" class="more float_r"><span>&gt;&gt;</span> View More</a>
+                    
       	</div> <!-- end of templatemo_middle -->
     
     </div>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Design Work, Blog Page</title>
+<title>Design Work, Registration Page</title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 <link href="templatemo_style.css" rel="stylesheet" type="text/css" />
@@ -37,30 +37,38 @@ http://www.templatemo.com/preview/templatemo_361_design_work
 </head>
 
 <?php
-include('dbAccess.php');
+//session_start();
+/*if (isset($_SESSION[] = ['u_id']){
+	}
+else{
+	
+	
+	}*/
+
+
+
+require_once('phpfncs/Database.php');
+$db =new DBOperations();
 	
 	if (isset($_POST['btnsubmit']))
 	{
-		$name = cleanInput($_POST['txtname']);
-		$email = cleanInput($_POST['txtemail']);
-		$uname = cleanInput($_POST['txtusername']);
-		$pword = cleanInput($_POST['txtpassword']);
-		$tpno = cleanInput($_POST['txttpno']);
-		$address = cleanInput($_POST['txtaddress']);
-		$city = cleanInput($_POST['txtcity']);
-		$dob = cleanInput($_POST['txtdob']);
+		$name = trim($_POST['txtname']);
+		$email = trim($_POST['txtemail']);
+		$uname = trim($_POST['txtusername']);
+		$pword = trim($_POST['txtpassword']);
+		$tpno = trim($_POST['txttpno']);
+		$address = trim($_POST['txtaddress']);
+		$city = trim($_POST['txtcity']);
+		$dob = trim($_POST['txtdob']);
 		
 		
 		$query = "INSERT INTO login_tbl SET user_name='$uname',password='$pword', name='$name', email='$email', tel_no='$tpno', address='$address', city='$city', date_of_birth='$dob'";
-		$result = executeQuery($query);
+		$result = $db->Exe_Qry($query);
 		echo 'Data uploaded';
 		header("location:blog.php");
-		//echo "<script type='text/javascript'>alert('submitted successfully!');</script>";
+	
 	}
-/*<script language="javascript">
-    alert("Record inserted successfully");
-    top.location.href = "blog.php"; //the page to redirect
-</script>*/
+
 ?>
 
 
@@ -70,13 +78,13 @@ include('dbAccess.php');
 	<div id="templatemo_wrapper">
     	
         <div id="templatemo_header">
-            <div id="site_title"><h1><a href="#">Design Work</a></h1></div>
+            <div id="site_title"><h1><a href="#">seller Registration</a></h1></div>
             <div id="templatemo_menu">
                 <ul>
                   <li><a href="index.php">Home</a></li>
                   <li><a href="about.php">About</a></li>
                   
-                  <li><a href="blog.php" class="current">Register</a></li>
+                  <li><a href="blog.php" class="current">Registration</a></li>
                   <li><a href="contact.php" class="last">Contact</a></li>
                 </ul>
             </div> <!-- end of templatemo_menu -->
@@ -105,7 +113,7 @@ we will take care of the rest</div>
                         <div class="cleaner h10"></div>
                         <label for="subject">Choose a username:</label> <input type="text" name="txtusername" id="txtusername" class="input_field" />
 						<div class="cleaner h10"></div>
-						<label for="subject">Choose a password:</label> <input type="text" name="txtpassword" id="txtpassword" class="input_field" />
+						<label for="subject">Choose a password:</label> <input type="password" name="txtpassword" id="txtpassword" class="input_field" />
 						<div class="cleaner h10"></div>
 						<label for="author">Telephone no:</label> <input type="text" id="txttpno" name="txttpno" class="required input_field" />
                        

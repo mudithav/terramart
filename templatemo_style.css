@@ -9,7 +9,7 @@ body {
 	color: #888888;
 	font-family: Tahoma, Geneva, sans-serif;
 	font-size: 13px;
-	line-height: 1.5em; 
+	/* [disabled]line-height: 1.5em; */
 	background-color: #f8f8f8;
 	background-image: url(images/templatemo_body.png);
 	background-position: top;

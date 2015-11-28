@@ -31,7 +31,7 @@ http://www.templatemo.com/preview/templatemo_361_design_work
                   <li><a href="about.php">About</a></li>
                   
                   <li><a href="blog.php">Register</a></li>
-                  <li><a href="contact.php" class="last current">Contact</a></li>
+                  <li><a href="contact.php" class="last current">Search</a></li>
                 </ul>
             </div> <!-- end of templatemo_menu -->
         </div><!-- end of header -->
@@ -50,12 +50,12 @@ we will take care of the rest</div>
 <div class="cbox_fw">
             	<div class="cbox_large float_l">
                 	<h2>Search  Land Details</h2>
-					<p>You  may search either by district or city</p> 
+					<p>You  may search either by district or city or street</p> 
 	    <form  method="post" action="search.php?go"  id="searchform"> 
-	      <input  type="text" name="city"> 
-	      <input  type="submit" name="submit" value="Search"> 
+	      <input  type="text" name="txtsearch"> 
+	      <input  type="submit" name="btnsearch" value="Search"> 
 	    </form> 
-		<p><a  href="?by=A">A</a> | <a  href="?by=B">B</a> | <a  href="?by=C">c</a></p> 
+		
                 	
                 <div id="contact_form">
                   
@@ -72,45 +72,73 @@ we will take care of the rest</div>
 </div>
 
 <?php 
-	//do  something here in code 
-	 if(isset($_POST['submit'])){ 
-	  if(isset($_GET['go'])){ 
-	  if(preg_match("/^[A-Za-z]+/", $_POST['city'])){ 
-	  $dcity=$_POST['city']; 
-	  //connect  to the database 
-	  $db=mysql_connect  ("localhost", "root",  "") or die ('I cannot connect to the database  because: ' . mysql_error()); 
-	  //-select  the database to use 
-	  $mydb=mysql_select_db("terramart_db"); 
-	  //-query  the database table 
-	  $sql="SELECT  district, city, land_size, price, contacts, status, description FROM land_info_tbl WHERE district LIKE '%" . $dcity .  "%' OR city LIKE '%" . $dcity ."%'"; 
-	  //-run  the query against the mysql query function 
-	  $result=mysql_query($sql); 
-	  //-create  while loop and loop through result set 
-	  while($row=mysql_fetch_array($result)){ 
-	          $district  =$row['district']; 
-	          $city=$row['city']; 
-	          $lsize=$row['land_size']; 
-			  $price=$row['price']; 
-			  $contacts=$row['contacts']; 
-			  $status=$row['status']; 
-			  $dscrpn=$row['description']; 
-			  $ID=$row['id'];
-	  //-display the result of the array 
-	  echo "<ul>\n"; 
-	  echo "<li>" . "<a  href=\"search.php?id=$ID\">"   .$district . " " . $city .  ""   .$lsize . ""   .$price . ""   .$contacts . ""   .$status . ""   .$dscrpn . "</a></li>\n"; 
-	  echo "</ul>"; 
-	  } 
-	  } 
-	  else{ 
-	  echo  "<p>Please enter a search query</p>"; 
-	  } 
-	  } 
-	  } 
-	?> 
 
+if(isset($_POST['btnsearch'])){
+$searchtxt = trim($_POST['txtsearch'])."%";
+if($searchtxt != "%")
+{	
+
+require_once("phpfncs/Database.php");
+$db =new DBOperations();
+
+$Result=$db->Exe_Qry("SELECT l.land_id, l.land_size, l.price, l.lname, d.d_name, c.c_name, s.street_name FROM land_info_tbl as l, district as d, city as c, street as s WHERE l.str_Code = s.str_Code AND s.cit_Code = c.cit_Code AND c.dis_Code = d.dis_Code AND (d_name LIKE '$searchtxt' OR c_name LIKE '$searchtxt' OR street_name LIKE '$searchtxt');");
+if ($db->Row_Count($Result)>0){
+?>
+<table width="200" align="center" border="1" width="1000px">
+  <tr>
+    <th scope="col" style="min-width:100px">Land Name</th>
+    <th scope="col" style="min-width:100px">Size</th>
+    <th scope="col" style="min-width:100px">Price</th>
+    <th scope="col" style="min-width:100px">District</th>
+    <th scope="col" style="min-width:100px">City</th>
+    <th scope="col" style="min-width:100px">Street</th>
+    <th scope="col" style="min-width:100px">&nbsp;</th>
+    </tr>
+    
+    <?php
+    while ($landraw= $db->Next_Record($Result))
+	{
+		
+		?>
+        
+        <tr>
+    <th scope="col" style="min-width:100px"><?php echo $landraw['3'];?></th>
+    <th scope="col" style="min-width:100px"><?php echo $landraw['1'];?></th>
+    <th scope="col" style="min-width:100px"><?php echo $landraw['2'];?></th>
+    <th scope="col" style="min-width:100px"><?php echo $landraw['4'];?></th>
+    <th scope="col" style="min-width:100px"><?php echo $landraw['5'];?></th>
+    <th scope="col" style="min-width:100px"><?php echo $landraw['6'];?></th>
+    <th scope="col" style="min-width:100px"><a href="<?php echo "ldetail.php?l=".$landraw['0'];?>" >read more</a></th>
+    </tr>
+        
+        <?php
+		
+		
+		
+		}
+	
+	
+	?>
+   
+</table>
+
+
+
+<?php 
+}
+else {
+	
+	echo 'no match found';
+	
+	}
+}
+}
+		
+	
+?>
 <div id="templatemo_footer_wrapper">
     <div id="templatemo_footer">
-        Copyright © 2015 <a href="#">Muditha Viranga</a>
+        Copyright ï¿½ 2015 <a href="#">Muditha Viranga</a>
         <div class="cleaner"></div>
     </div>
 </div>

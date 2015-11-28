@@ -32,8 +32,19 @@ http://www.templatemo.com/preview/templatemo_361_design_work
 		},
 	});
 </script>
+<?php
+ @session_start();
 
+require_once("phpfncs/Database.php"); 
+$db =new DBOperations();
+
+?>
 </head>
+
+
+
+
+
 <body>
 
 <div id="templatemo_body_wrapper">
@@ -77,7 +88,18 @@ we will take care of the rest</div>
                 </div>
                 <div class="cbox_3b cbox_rm fp_box"><span class="b3"></span>
                     <h3>&nbsp;</h3>
+                    <?php
+                    if (!isset($_SESSION['login_un']))
+{
+	?>
                     <h4 align="center"><a href="signin.php">Sign in</a></h4>
+                    <?php
+}else {
+						?>
+                        <h4 align="center"><a href="signin.php">Sign out(<?php echo $_SESSION['login_un']?>)</a></h4>
+                        
+						<?php 
+						}?>
                     <p></p>
                 </div>
                 <div class="cleaner"></div>
@@ -92,8 +114,72 @@ we will take care of the rest</div>
                 	<p></p>
 					<div class="cleaner h20"></div>
                     
+                  <?php
+                  $Result = $db->Exe_Qry("select lname,land_id,description from land_info_tbl order by land_id DESC;");
+				  if ($db->Row_Count($Result)==0)
+				  {
+					  ?>
+					  
+					  <div class="cbox_small float_l">
+               	  	<h5 class="tw_bullet">No Advertisements Available yet.</h5>	                       
+                    </div>
+					  
+					  <?php
+				  }
+				  else if ($db->Row_Count($Result)==1)
+				  { 
+				  
+				  $land_data=$db->Next_Record($Result);
+				  $imgpath="uploads/".$land_data['land_id'].".jpg";
+				  $pagelink="ldetail.php?l=".$land_data['land_id'];
+				  ?>
+					  <div class="cbox_small float_l">
+               	  <h5 class="tw_bullet"><?php echo $land_data['lname'];?></h5>
+                    	<img src="<?php echo $imgpath;?>" alt="marketing" class="image_frame" height="100" width="280"/>
+                    	<p><?php echo $land_data['description'];?></p>
+                        <a href="<?php echo $pagelink;?>" class="more float_r"><span>&gt;&gt;</span> Read More</a>                       
+                    </div>
                     
-				<div class="cbox_small float_l">
+                     <div class="cbox_small float_l">
+                    
+                     <h5 >&nbsp;</h5>
+                    </div>
+                    
+					  
+					<?php  }
+				  else
+				  {
+					  $land_data=$db->Next_Record($Result);
+				  	  $imgpath="uploads/".$land_data['land_id'].".jpg";
+					  $pagelink="ldetail.php?l=".$land_data['land_id'];
+					  ?>
+                      <div class="cbox_small float_l">
+               	  <h5 class="tw_bullet"><?php echo $land_data['lname'];?></h5>
+                    	<img src="<?php echo $imgpath;?>" alt="marketing" class="image_frame" height="100" width="280"/>
+                    	<p><?php echo $land_data['description'];?></p>
+                        <a href="<?php echo $pagelink;?>" class="more float_r"><span>&gt;&gt;</span> Read More</a>                       
+                    </div>
+                    <?php
+					  $land_data=$db->Next_Record($Result);
+				  	  $imgpath="uploads/".$land_data['land_id'].".jpg";
+					  $pagelink="ldetail.php?l=".$land_data['land_id'];
+					?>
+                     <div class="cbox_small float_l">
+                    
+                     <h5 >&nbsp;</h5>
+                    </div>
+                    
+                     <div class="cbox_small float_r">
+               	  <h5 class="tw_bullet"><?php echo $land_data['lname'];?></h5>
+                    	<img src="<?php echo $imgpath;?>" alt="marketing" class="image_frame" height="100" width="280"/>
+                    	<p><?php echo $land_data['description'];
+						?></p>
+                        <a href="<?php echo $pagelink;?>" class="more float_r"><span>&gt;&gt;</span> Read More</a>                       
+                    </div>
+                      
+                   
+                    
+				<!--<div class="cbox_small float_l">
                	  <h5 class="tw_bullet">Nawala</h5>
                     	<img src="images/templatemo_image_051.png" alt="marketing" class="image_frame" />
                     	<p>Situated in a friendly upmarket neighborhood.<br />
@@ -107,13 +193,18 @@ we will take care of the rest</div>
                     	  Please no brokers or telemarketers<br />
                    	    Genuine buyers are invited to inspect the property.</p>
                         <a href="#" class="more float_r"><span>&gt;&gt;</span> Read More</a>                       
-                    </div>
+                    </div>-->
+                    
+                    
+                    
+                    
+                    
                     <div class="cbox_small float_l">
                     
                      <h5 >&nbsp;</h5>
                     </div>
                     
-                <div class="cbox_small float_l">
+                <!--<div class="cbox_small float_l">
                	  <h5 class="tw_bullet">Mount Lavinia</h5>
                    	<img src="images/templatemo_image_052.png" alt="marketing" class="image_frame" />
                    	<p>Land for sale @ Mount Lavinia (near Galle rd 50m)<br />
@@ -128,7 +219,7 @@ we will take care of the rest</div>
                	    2.1 million , 21 Laks -per perch (Negotiable) </p>
                     <a href="#" class="more float_r"><span>&gt;&gt;</span> Read More</a>                       
                   </div>
-           	  </div>
+           	  </div>-->
               
               
             	<div class="cleaner"></div>
@@ -141,9 +232,14 @@ we will take care of the rest</div>
             <div id="SlideItMoo_outer">	
                 <div id="SlideItMoo_inner">			
                     <div id="SlideItMoo_items">
+                    <?php
+					  $land_data=$db->Next_Record($Result);
+				  	  $imgpath="uploads/".$land_data['land_id'].".jpg";
+					  $pagelink="ldetail.php?l=".$land_data['land_id'];
+					?>
                         <div class="SlideItMoo_element">
                         	<span></span>
-                            <a href="#"><img src="images/gallery/011.png" alt="product 1" /></a>
+                            <a href="<?php //echo $pagelink;?>"><img src="<?php echo $imgpath;?>" alt="product 1" height="80" width="195"/></a>
                         </div>	
                         <div class="SlideItMoo_element">
                         	<span></span>
@@ -164,11 +260,15 @@ we will take care of the rest</div>
                         <div class="SlideItMoo_element">
                         	<span></span>
                             <a href="#"><img src="images/gallery/031.png" alt="product 6" /></a>
+                            
+                               <?php
+				  }
+                  ?>
                         </div>
                     </div>			
                 </div>
 			</div> 
-            <a href="#" class="more float_r"><span>&gt;&gt;</span> View More</a>
+            
       	</div> <!-- end of templatemo_middle -->
     
     </div>

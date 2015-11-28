@@ -9,18 +9,21 @@
 
 </head>
 <?php
-include('dbAccess.php');
+//include('dbAccess.php');
+require_once('phpfncs/Database.php');
+$db =new DBOperations();
 	
 		if (isset($_POST['btnsubmit']))
 	{
-		$cname = cleanInput($_POST['cname']);
-		$email = cleanInput($_POST['email']);
-		$subject = cleanInput($_POST['subject']);
-		$message = cleanInput($_POST['message']);
+		$cname = trim($_POST['cname']);
+		$email = trim($_POST['email']);
+		$subject = trim($_POST['subject']);
+		$message = trim($_POST['message']);
 		
 						
 		$query = "INSERT INTO contact_info SET cname='$cname',cemail='$email', subject='$subject', message='$message'";
-		$result = executeQuery($query);
+		//$result = executeQuery($query);
+		$result = $db->Exe_Qry($query);
 		echo "Update Successfully";
 		//header("location:index.php")
 		
