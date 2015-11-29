@@ -17,7 +17,7 @@
 				height: 100%
 			}
 		</style>
-		<script src="http://cdnjs.cloudflare.com/ajax/libs/three.js/r69/three.min.js"></script>
+		<script src="jss/three.min.js"></script>
 </head>
 <?php
 session_start();
