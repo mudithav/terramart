@@ -21,6 +21,13 @@
 </head>
 <?php
 session_start();
+require_once 'libs/twitteroauth.php';
+ 
+define('CONSUMER_KEY', 'BHw60P1LffQ7EWAXo6CXqPxnf');
+define('CONSUMER_SECRET', 'B6R0ysJai4yp1gxhwht8xugTwH5MBvIN89zSQUTGLuEtAo6dMJ');
+define('ACCESS_TOKEN', '1649757685-ULl3ncUtqXhPuB3ThZxbl4DanCu4KRjaGE2ZIrd');
+define('ACCESS_TOKEN_SECRET', 'KBBNXCoJNLGWBhgKh8Wb8EcuU4N2oIl1CpaJN1YS6WrC5');
+
 if (!isset($_SESSION['landId']))
 {
 	$_SESSION['landId']=$_GET['l'];
@@ -67,9 +74,9 @@ http://www.templatemo.com/preview/templatemo_361_design_work
         
         <div id="templatemo_middle">
             <div id="mid_left">
-                <div id="mid_title">You pick the location,<br /><br />
+                <div id="mid_title">You pick the location,<br />
 we will take care of the rest</div>
-                <p>TIERRAMART is the intelligent web service that helps you to find a suitable land according to your favour. </p>
+                <p>TERRAMART is the intelligent web service that helps you to find a suitable land according to your favour. </p>
             </div>
             <img src="images/templatemo_icon_011.png" alt="free for job" width="267" />
         </div> <!-- end of middle -->
@@ -248,7 +255,7 @@ we will take care of the rest</div>
     
         
     
-    <iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0"width="642" height="443" src="https://maps.google.com/maps?hl=en&q=<?php echo $Result['street_name'];?>, <?php echo $Result['c_name'];?>&ie=UTF8&t=satellite&z=18&iwloc=B&output=embed">
+    <iframe frameborder="0" scrolling="no" marginheight="0" marginwidth="0"width="642" height="443" src="https://maps.google.com/maps?hl=en&q=<?php echo $Result['street_name'];?>, <?php echo $Result['c_name'];?>&ie=UTF8&t=k&z=17&iwloc=B&output=embed">
     <div>
 <small>
 <a href="http://embedgooglemaps.com">embedgooglemaps.com</a>
@@ -257,7 +264,84 @@ we will take care of the rest</div>
 </iframe>
     
     
+    
+    <div class="cleaner"><br /><br /></div>
+    <div class="cbox_small float_l" style="width:800px;" >
+    <h2><u>List of Social information related to Area</u></h2>
+    <?php
+	$rss = new DOMDocument();
+	$rss->load('http://www.hirunews.lk/rss/english.xml');
+	$feed = array();
+	foreach ($rss->getElementsByTagName('item') as $node) {
+		$item = array ( 
+			'title' => $node->getElementsByTagName('title')->item(0)->nodeValue,
+			'desc' => $node->getElementsByTagName('description')->item(0)->nodeValue,
+			'link' => $node->getElementsByTagName('link')->item(0)->nodeValue,
+			'date' => $node->getElementsByTagName('pubDate')->item(0)->nodeValue,
+			);
+		array_push($feed, $item);
+	}
+	$limit = 5;
+
+		
+	for($x=0;$x<$limit;$x++) {
+		$title = str_replace(' & ', ' &amp; ', $feed[$x]['title']);
+		$link = $feed[$x]['link'];
+		$description = $feed[$x]['desc'];
+		$date = date('l F d, Y', strtotime($feed[$x]['date']));
+		
+		echo '<p><strong><a href="'.$link.'" title="'.$title.'">'.$title.'</a></strong><br />';
+		echo '<small><em>Posted on '.$date.'</em></small></p>';
+		echo '<p>'.$description.'</p>';
+		
+		}
+?>
+
     </div>
+    <div class="cbox_small float_l" style="width:800px;" >
+    <?php
+	$rss = new DOMDocument();
+	$rss->load('http://www.lankanewspapers.com/news/rss.xml');
+	$feed = array();
+	foreach ($rss->getElementsByTagName('item') as $node) {
+		$item = array (
+			'title' => $node->getElementsByTagName('title')->item(0)->nodeValue,
+			'link' => $node->getElementsByTagName('link')->item(0)->nodeValue,
+			);
+		array_push($feed, $item);
+	}
+	$limit = 10;
+	if ($feed == null) echo "does not compute";
+	else
+	for($x=0;$x<$limit;$x++) {
+		$title = str_replace("&", "&amp;", $feed[$x]["title"]);
+		$link = $feed[$x]["link"];
+		echo '<a href="'.$link.'" title="'.$title.'" rel="nofollow">'.$title.'</a>';
+	}
+?>
+
+
+    </div>
+    <div class="cleaner"><br /><br />
+    <?php
+	function search(array $query)
+{
+  $toa = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET);
+  return $toa->get('search/tweets', $query);
+}
+ 
+$query = array(
+  "q" => $Result['street_name'],
+  "count" => 20,
+  "result_type" => "popular",
+  "lang" => "en",
+);
+
+	?>
+    
+    </div>
+    </div>
+    <div class="cleaner"></div>
 </div>
 
 <div id="templatemo_footer_wrapper">

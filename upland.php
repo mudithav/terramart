@@ -205,7 +205,7 @@ http://www.templatemo.com/preview/templatemo_361_design_work
 	<div id="templatemo_wrapper">
     	
         <div id="templatemo_header">
-            <div id="site_title"><h1><a href="#">TIERRAMART</a></h1></div>
+            <div id="site_title"><h1><a href="#">TERRAMART</a></h1></div>
             <div id="templatemo_menu">
                 <ul>
                   <li><a href="index.php">Home</a></li>
@@ -219,9 +219,9 @@ http://www.templatemo.com/preview/templatemo_361_design_work
         
         <div id="templatemo_middle">
             <div id="mid_left">
-                <div id="mid_title">You pick the location,<br /><br />
+                <div id="mid_title">You pick the location,<br />
 we will take care of the rest</div>
-                <p>TIERRAMART is the intelligent web service that helps you to find a suitable land according to your favour. </p>
+                <p>TERRAMART is the intelligent web service that helps you to find a suitable land according to your favour. </p>
             </div>
             <img src="images/templatemo_icon_011.png" alt="free for job" width="267" />
         </div> <!-- end of middle -->

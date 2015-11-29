@@ -51,7 +51,7 @@ $db =new DBOperations();
 	<div id="templatemo_wrapper">
     	
         <div id="templatemo_header">
-            <div id="site_title"><h1><a href="#">TIERRAMART</a></h1></div>
+            <div id="site_title"><h1><a href="#">TERRAMART</a></h1></div>
             <div id="templatemo_menu">
                 <ul>
                   <li><a href="index.php" class="current">Home</a></li>
@@ -64,9 +64,9 @@ $db =new DBOperations();
         
         <div id="templatemo_middle">
             <div id="mid_left">
-                <div id="mid_title">You pick the location,<br /><br />
+                <div id="mid_title">You pick the location,<br />
 we will take care of the rest</div>
-                <p>TIERRAMART is the intelligent web service that helps you to find a suitable land according to your favour. </p>
+                <p>TERRAMART is the intelligent web service that helps you to find a suitable land according to your favour. </p>
 				
                 
             </div>
