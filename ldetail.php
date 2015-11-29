@@ -102,7 +102,7 @@ we will take care of the rest</div>
 
 ?>
  			<div class="cbox_small float_l">
-               	  <h5 class="tw_bullet"><?php echo $Result['lname'];?></h5>
+               	  <h5 class="tw_bullet"><?php echo $Result['lname'];?>, <?php echo $Result['street_name'];?>, <?php echo $Result['c_name'];?>.</h5>
                     	<!--<img src="" alt="marketing" class="image_frame" />-->
                         
                      <div id="sphere_div" style="width:800px; height:400px;" ></div>  

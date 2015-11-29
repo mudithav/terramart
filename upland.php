@@ -26,8 +26,7 @@ var eletbl =  document.getElementById("tbl_"+rtbl);
 if (element != null)
 {
   if (str=="New" || str=="") {
-	document.getElementById("engtxt").value="";
-  	document.getElementById("sintxt").value="";
+	
 	if (ttbl=="district")
 	{
 		document.getElementById("cmb_city").innerHTML="Select a District";
@@ -57,7 +56,6 @@ if (element != null)
 	{
 		document.getElementById("cmb_gn_division").innerHTML="Select an Street";
 	}
-	Disableadd(false);
 	var tbl1 = document.getElementById("tbl_district");
 	var tbl2 = document.getElementById("tbl_city");
 	var tbl3 = document.getElementById("tbl_street");
@@ -84,8 +82,6 @@ if (element != null)
   xmlhttp11.onreadystatechange=function() {
     if (xmlhttpcond(xmlhttp11)) {
 		  document.getElementById("cmb_"+rtbl).innerHTML=xmlhttp11.responseText;
-		  document.getElementById("engtxt").value="";
-		  document.getElementById("sintxt").value="";
 		  if (ttbl=="district")
 			{
 				var ele1 = document.getElementById("cmb_street");
@@ -107,7 +103,6 @@ if (element != null)
 				ele3.innerHTML="Select an Street";
 				}
 			}
-			Disableadd(false);
 			if (eletbl == null)
 			{
 			/*alert (eletbl);			
@@ -146,40 +141,14 @@ if (element != null)
 	}
   xmlhttp11.open("GET","phpfncs/comboloader.php?p="+str+"&q="+ttbl+"&r="+rtbl+"&e="+xxxx,true);
   xmlhttp11.send();
-  document.getElementById("engtxt").value="";
-  document.getElementById("sintxt").value="";
-  Disableadd(false);
-	if (eletbl != null)
-	{
-		xmlhttp12 = xmlhttpfunc();
-		xmlhttp12.onreadystatechange=function() {
-			if (xmlhttpcond(xmlhttp12)) {
-			  document.getElementById("tbl_"+rtbl).innerHTML=xmlhttp12.responseText;
-			  document.getElementById("tbl_"+rtbl).style.display = 'table';
-			}
-		}
-		xmlhttp12.open("GET","phpfncs/tblloader.php?p="+str+"&q="+ttbl+"&r="+rtbl,true);
-		xmlhttp12.send();	
-	}
 }
 else
 {
 	/*alert (str+ " - "+ttbl+ " - " +rtbl);*/
 	if (str=="New" || str=="") {
-		document.getElementById("engtxt").value="";
-		document.getElementById("sintxt").value="";
-		Disableadd(false);
+
 		return;
 	} 
-	xmlhttp13 = xmlhttpfunc();
-	xmlhttp13.onreadystatechange=function() {
-		if (xmlhttpcond(xmlhttp13)) {
-		  document.getElementById("txt_txts").innerHTML=xmlhttp13.responseText;
-		  Disableadd(true);
-		}
-	}
-	xmlhttp13.open("GET","phpfncs/txtloader.php?p="+str+"&q="+ttbl,true);
-	xmlhttp13.send();	
 }
 } //loadcombos
 
@@ -260,18 +229,18 @@ $db =new DBOperations();
 		
 		
 		
-		$query = "INSERT INTO land_info_tbl SET lname= '$lname', str_Code='$strcode',  land_size='$landsz', price='$price', contacts='$contact', status='1', description='$dscrp', user_id='$u_id'";
-		
-		$result = $db->Exe_Qry($query);
+		$db->Exe_Qry("INSERT INTO land_info_tbl SET lname= '$lname', str_Code='$strcode',  land_size='$landsz', price='$price', contacts='$contact', status='1', description='$dscrp', user_id='$u_id'");
 		
 		
 		
-		$Result=$db->Next_Record($db->Exe_Qry("SELECT land_id FROM land_info_tbl WHERE user_id= '$u_id' AND lname = '$lname' AND str_Code='$strcode' AND  land_size='$landsz' AND price='$price' AND contacts='$contact'"));
+		
+		
+		$Result=$db->Next_Record($db->Exe_Qry("SELECT MAX(land_id) FROM land_info_tbl"));
 		
 		
 		
 
-		$target_file = "uploads/".$Result['land_id'].".jpg";	
+		$target_file = "uploads/".$Result['0'].".jpg";	
 		
 		//echo 'Data uploaded';
 		
@@ -299,7 +268,7 @@ $db =new DBOperations();
                     </p>
                 	<p></p>
                   <div id="upland_form">
-                  <form method="POST" name="upland" id="upland" action="<?php echo $_SERVER["PHP_SELF"];?>" enctype="multipart/form-data">
+                  <form method="post" name="upland" id="upland" action="<?php echo $_SERVER["PHP_SELF"];?>" enctype="multipart/form-data">
                         
                         <label>District:</label> <div id="cmb_district"></div>
                         <div class="cleaner h10"></div>
