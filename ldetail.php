@@ -17,7 +17,7 @@
 				height: 100%
 			}
 		</style>
-		<script src="jss/three.min.js"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/three.js/r69/three.min.js"></script>
 </head>
 <?php
 session_start();
@@ -104,7 +104,7 @@ we will take care of the rest</div>
  			<div class="cbox_small float_l">
                	  <h5 class="tw_bullet"><?php echo $Result['lname'];?>, <?php echo $Result['street_name'];?>, <?php echo $Result['c_name'];?>.</h5>
                     	<!--<img src="" alt="marketing" class="image_frame" />-->
-                        
+                        <input type="hidden" name="hidtxt" id="hidtxt" value="<?php echo $Result['c_name'];?>" />
                      <div id="sphere_div" style="width:800px; height:400px;" ></div>  
                         
                         
@@ -352,4 +352,37 @@ $query = array(
 </div>
 
 </body>
+
 </html>
+<script>
+<script>
+function xmlhttpcond(xht)
+{
+	if (xht.readyState==4 && xht.status==200) {
+		return true;
+	}
+	else{
+		return false;
+	}
+} //xmlhttpcond	
+function xmlhttpfunc()
+{
+	if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    return new XMLHttpRequest();
+  } else { // code for IE6, IE5
+    return new ActiveXObject("Microsoft.XMLHTTP");
+  }
+} //xmlhttpfunc
+
+var cnameval= document.getElementById("hidtxt").value;
+xmlhttp11 = xmlhttpfunc();
+  xmlhttp11.onreadystatechange=function() {
+    if (xmlhttpcond(xmlhttp11)) {
+		alert ("success");
+	}
+  }
+  xmlhttp11.open("GET","http://216.22.34.195:8080/Terramart/agent?loc="+cnameval,true);
+  xmlhttp11.send();
+	
+</script>
