@@ -49,12 +49,28 @@ $db =new DBOperations();
 
 $Result=$db->Next_Record($db->Exe_Qry("SELECT l.land_id, l.land_size, l.price, l.contacts, l.status, l.description, l.lname, d.d_name, c.c_name, s.street_name FROM land_info_tbl as l, district as d, city as c, street as s WHERE land_id ='$lid' AND l.str_Code = s.str_Code AND s.cit_Code = c.cit_Code AND c.dis_Code = d.dis_Code;"));
 
-?>		
+
+
+//$r = new HttpRequest('http://216.22.34.195:8080/Terramart/agent?loc='.$Result['c_name'], HttpRequest::METH_POST);
+//$r->setOptions(array('cookies' => array('lang' => 'de')));
+//$r->addPostFields(array('user' => 'mike', 'pass' => 's3c|r3t'));
+
+//try {
+    //echo $r->send()->getBody();
+//} catch (HttpException $ex) {
+    //echo $ex;
+//}
+
+
+?>	
+
+
+	
 <body>
-<!-- templatemo 361 design work -->
+<!-- terramart design work -->
 <!-- 
 Design Work Template 
-http://www.templatemo.com/preview/templatemo_361_design_work 
+
 -->
 <div id="templatemo_body_wrapper">
 	<div id="templatemo_wrapper">
@@ -223,6 +239,7 @@ we will take care of the rest</div>
                         
                     <br />     <br />
                      <div class="cbox_small float_l" style="width:800px;" >
+                     
                      <p><?php echo $Result['description'];?></p>
                          <br /> 
                      </div> 
@@ -232,7 +249,8 @@ we will take care of the rest</div>
                           <br />    
                          <p>Price : RS <?php echo $Result['price'];?></p> 
                           <br />    
-                         <p>Contact :<?php echo $Result['contacts'];?></p>                  
+                         <p>Contact :<?php echo $Result['contacts'];?></p>  
+                                     
                     </div>
 
 
@@ -266,6 +284,7 @@ we will take care of the rest</div>
     
     
     <div class="cleaner"><br /><br /></div>
+    <div id="colorstrip"/>
     <div class="cbox_small float_l" style="width:800px;" >
     <h2><u>List of Social information related to Area</u></h2>
     <?php
@@ -331,15 +350,28 @@ we will take care of the rest</div>
 }
  
 $query = array(
-  "q" => $Result['street_name'],
+  "q" => $Result['c_name'],
   "count" => 20,
   "result_type" => "popular",
   "lang" => "en",
 );
 
+$results = search($query);
+ 
+foreach ($results->statuses as $result) {
+  echo $result->user->screen_name . ": " . $result->text . "\n";
+}
 	?>
     
     </div>
+    
+     <div class="cbox_small float_l" style="width:800px;" >
+                     
+                     <p></p>
+                         <br /> 
+                         </div>
+    
+    
     </div>
     <div class="cleaner"></div>
 </div>
